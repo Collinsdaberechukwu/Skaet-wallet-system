@@ -3,6 +3,7 @@ package com.collins.Skaet_wallet_system.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
 public class ApplicationUser extends BaseEntity{
 
     @Column(nullable = false)
-    private String fullName;
+    private String userName;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -26,6 +27,14 @@ public class ApplicationUser extends BaseEntity{
 
     @Column(nullable = false,unique = true)
     private String password;
+
+    @Column(name = "last_login")
+    private LocalDateTime lastLogin;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id")
+    @ToString.Exclude
+    private Role role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Wallet> wallets = new ArrayList<>();
