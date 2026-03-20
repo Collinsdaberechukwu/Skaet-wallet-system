@@ -1,6 +1,7 @@
 package com.collins.Skaet_wallet_system.config.SecurityConfig.SecurityServices;
 
 import com.collins.Skaet_wallet_system.model.ApplicationUser;
+import com.collins.Skaet_wallet_system.model.Role;
 import com.collins.Skaet_wallet_system.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,11 @@ public class CustomUserDetailService implements UserDetailsService {
         ApplicationUser applicationUser = userRepository.findByEmail(username);
         if (applicationUser == null){
             throw new UsernameNotFoundException("User not found with email :" + username);
+        }
+
+        Role role = applicationUser.getRole();
+        if (role != null) {
+            role.getRoleName();
         }
         return new CustomUserDetails(applicationUser);
     }

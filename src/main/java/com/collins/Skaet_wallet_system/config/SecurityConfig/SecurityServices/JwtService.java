@@ -1,6 +1,6 @@
 package com.collins.Skaet_wallet_system.config.SecurityConfig.SecurityServices;
 
-import com.collins.Skaet_wallet_system.dtos.Request.LoginRequestDto;
+import com.collins.Skaet_wallet_system.dtos.Request.LoginRequest;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,9 +18,9 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    private final String secretKey = "wtxXrFRTGOy1OSiyshjNNrTvyEq1xttWbXlAcecbqH5";
+    private final String secretKey = "QWERTYUIOPASDFGHJKLZXCVBNM1234567890abcdef=";
 
-    public String generateToken(LoginRequestDto loginRequest){
+    public String generateToken(LoginRequest loginRequest){
         Map<String,Object> claims = new HashMap<>();
         claims.put("email",loginRequest.getEmail());
         claims.put("role","User");
@@ -35,9 +36,7 @@ public class JwtService {
     }
 
     private SecretKey generateKey(){
-        byte[] decode
-                = Decoders.BASE64.decode(secretKey);
-        return Keys.hmacShaKeyFor(decode);
+        return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
     }
 
 

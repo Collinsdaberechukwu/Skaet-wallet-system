@@ -20,7 +20,7 @@ public class Role extends BaseEntity{
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role_name",nullable = false)
-    private RoleType roleType;
+    private RoleType roleName;
 
     @OneToMany(mappedBy = "role")
     private List<ApplicationUser> applicationUser;

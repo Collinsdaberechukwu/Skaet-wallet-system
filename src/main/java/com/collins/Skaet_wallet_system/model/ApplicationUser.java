@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "application_users")
 @Getter
 @Setter
 @ToString
@@ -21,9 +21,6 @@ public class ApplicationUser extends BaseEntity{
 
     @Column(nullable = false, unique = true)
     private String email;
-
-    @Column(unique = true)
-    private String phoneNumber;
 
     @Column(nullable = false,unique = true)
     private String password;

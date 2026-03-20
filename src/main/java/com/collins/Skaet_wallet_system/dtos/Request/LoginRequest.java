@@ -1,10 +1,14 @@
 package com.collins.Skaet_wallet_system.dtos.Request;
 
 import jakarta.validation.constraints.NotEmpty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-public class LoginRequestDto {
+@NoArgsConstructor
+@AllArgsConstructor
+public class LoginRequest {
 
     @NotEmpty(message = "Email is required for login")
     private String email;

@@ -20,12 +20,11 @@ public class Wallet extends BaseEntity{
     @Column(unique = true, nullable = false)
     private String walletNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private ApplicationUser user;
-
     @Column(nullable = false)
     private BigDecimal balance;
+
+    @Column(nullable = false)
+    private String description;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -33,6 +32,10 @@ public class Wallet extends BaseEntity{
 
     @Version
     private Long version;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private ApplicationUser user;
 
     @OneToMany(mappedBy = "wallet", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<WalletTransaction> transactions = new ArrayList<>();

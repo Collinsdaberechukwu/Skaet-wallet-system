@@ -31,7 +31,7 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(request-> request
-                        .requestMatchers("/**").permitAll()
+                        .requestMatchers("/api/v1/wallets/user_creation","/api/v1/wallets/login").permitAll()
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider())

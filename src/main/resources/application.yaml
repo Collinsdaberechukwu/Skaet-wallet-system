@@ -1,25 +1,84 @@
+#Docker config compatible
+
 spring:
   application:
     name: Skaet-wallet-system
 
-
   datasource:
-    url: jdbc:mysql://localhost:3306/SkaetWalletSystemDb?useSSL=false&serverTimezone=UTC
-    username: root
-    password: "@Collins20"
+    url:  ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/SkaetWalletSystemAppDb?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    password: ${SPRING_DATASOURCE_PASSWORD:@Collins20}
+    hikari:
+      initialization-fail-timeout: 60000
+      connection-timeout: 30000
 
-    jpa:
-      hibernate:
-        ddl-auto: create-drop
-      show-sql: true
-      database-platform: org.hibernate.dialect.MySQLDialect
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQLDialect
+
+  data:
+    redis:
+      host: ${SPRING_REDIS_HOST:localhost}
+      port: ${SPRING_REDIS_PORT:6379}
 
 server:
   port: 8990
 
 
-  #Redis config
-  data:
-    redis:
-      host: localhost
-      port: 6379
+resilience4j:
+  ratelimiter:
+    instances:
+
+      authLimiter:
+        limitForPeriod: 100
+        limitRefreshPeriod: 1m
+        timeoutDuration: 5s
+
+      walletLimiter:
+        limitForPeriod: 10
+        limitRefreshPeriod: 1m
+        timeoutDuration: 0
+
+      withdrawLimiter:
+        limitForPeriod: 2
+        limitRefreshPeriod: 10s
+        timeoutDuration: 5s
+
+      transferLimiter:
+        limitForPeriod: 2
+        limitRefreshPeriod: 10s
+        timeoutDuration: 5s
+
+      reverseLimiter:
+        limitForPeriod: 2
+        limitRefreshPeriod: 10s
+        timeoutDuration: 5s
+
+#spring:
+#  application:
+#    name: Skaet-wallet-system
+#
+#
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/SkaetWalletSystemAppDb?useSSL=false&serverTimezone=UTC
+#    username: root
+#    password: "@Collins20"
+#
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
+#    database-platform: org.hibernate.dialect.MySQLDialect
+#
+#
+#server:
+#  port: 8990
+#
+#
+#  #Redis config
+#  data:
+#    redis:
+#      host: localhost
+#      port: 6379

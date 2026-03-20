@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: wallet_app
+    ports:
+      - "${APP_PORT}:${APP_PORT}"
+    depends_on:
+      - mysql
+      - redis
+    env_file:
+      - .env
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/${MYSQL_DATABASE}?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    networks:
+      - wallet-network
+
+  mysql:
+    image: mysql:8.0
+    container_name: wallet_mysql
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - wallet-network
+
+  redis:
+    image: redis:7
+    container_name: wallet_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis_data:/data
+    networks:
+      - wallet-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: wallet_phpmyadmin
+    ports:
+      - "8081:80"
+    env_file:
+      - .env
+    environment:
+      PMA_HOST: mysql
+    depends_on:
+      - mysql
+    networks:
+      - wallet-network
+
+volumes:
+  mysql_data:
+  redis_data:
+
+networks:
+  wallet-network:
