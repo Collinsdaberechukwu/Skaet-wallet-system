@@ -86,7 +86,8 @@ Redis
 
 PhpMyAdmin
 
-🧪 API Testing (Postman)
+
+API Testing (Postman)
 
 Base URL:
 
@@ -118,7 +119,7 @@ JWT tokens used for authentication
 
 Role-based authorization implemented
 
-⚡ Rate Limiting (Resilience4j)
+Rate Limiting (Resilience4j)
 
 Configured using fixed window strategy:
 
