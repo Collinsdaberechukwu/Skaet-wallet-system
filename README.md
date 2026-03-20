@@ -26,7 +26,7 @@ This system is built with a focus on **scalability, reliability, and security**,
 - Transaction history with filtering and pagination
 - Transaction status tracking (SUCCESS, REVERSED, etc.)
 
-### ⚡ Reliability & Safety
+###  Reliability & Safety
 - **Rate Limiting (Resilience4j)** to prevent abuse
 - **Idempotency** to prevent duplicate transactions
 - **Redis-based locking** to prevent concurrent wallet access issues
