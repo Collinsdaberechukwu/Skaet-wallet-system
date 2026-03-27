@@ -17,7 +17,7 @@ import com.collins.Skaet_wallet_system.model.*;
 import com.collins.Skaet_wallet_system.repositories.*;
 import com.collins.Skaet_wallet_system.service.WalletService;
 import com.collins.Skaet_wallet_system.util.ReferenceGenerator;
-import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+//import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -100,7 +100,7 @@ public class WalletServiceImplementation implements WalletService {
 
     }
 
-    @RateLimiter(name = "authLimiter", fallbackMethod = "loginFallback")
+//    @RateLimiter(name = "authLimiter", fallbackMethod = "loginFallback")
     @Override
     public ResponseEntity<LoginResponse> loginUser(LoginRequest loginRequest){
         Authentication authenticate = authenticationManager.authenticate(
@@ -119,7 +119,7 @@ public class WalletServiceImplementation implements WalletService {
         }
     }
 
-    @RateLimiter(name = "walletLimiter", fallbackMethod = "walletFallback")
+//    @RateLimiter(name = "walletLimiter", fallbackMethod = "walletFallback")
     @Transactional
     @Override
     public ResponseEntity<WalletResponse> fundWallet(FundWalletRequest fundWalletRequest, String idempotencyKey){
@@ -178,7 +178,7 @@ public class WalletServiceImplementation implements WalletService {
     }
 }
 
-    @RateLimiter(name = "withdrawLimiter", fallbackMethod = "witdrawFallback")
+//    @RateLimiter(name = "withdrawLimiter", fallbackMethod = "withdrawFallback")
     @Transactional
     @Override
     public ResponseEntity<WalletResponse> withdraw(WithdrawRequest request, String idempotencyKey) {
@@ -252,7 +252,7 @@ public class WalletServiceImplementation implements WalletService {
         idempotencyKeyRepository.save(entity);
     }
 
-    @RateLimiter(name = "transferLimiter", fallbackMethod = "transferFallback")
+//    @RateLimiter(name = "transferLimiter", fallbackMethod = "transferFallback")
     @Transactional
     @Override
     public ResponseEntity<String> transferFunds(TransferRequest request, String idempotencyKey) {
@@ -383,7 +383,7 @@ public class WalletServiceImplementation implements WalletService {
     }
 
 
-    @RateLimiter(name = "reverseLimiter", fallbackMethod = "reverseFallback")
+//    @RateLimiter(name = "reverseLimiter", fallbackMethod = "reverseFallback")
     @Transactional
     @Override
     public ResponseEntity<TransactionResponse> reverseTransaction(ReverseTransactionRequest request, String idempotencyKey) {

@@ -31,7 +31,11 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(request-> request
-                        .requestMatchers("/api/v1/wallets/user_creation","/api/v1/wallets/login").permitAll()
+                        .requestMatchers("/api/v1/wallets/user_creation",
+                                                    "/api/v1/wallets/login",
+                                                    "/swagger-ui/**",
+                                                    "/v3/api-docs/**")
+                                                    .permitAll()
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider())
